@@ -9,8 +9,8 @@ const characterComponent = (name, height, mass, index, hairColor, eyeColor) => `
     
     <button class="more" id="fontos">show more</button>
     <div class="more-data">
-      <p class="hair-color"> ${hairColor} </p>
-      <p class="eye-color"> ${eyeColor} </p>
+      <p class="hair-color ${hairColor}"> ${hairColor} </p>
+      <p class="eye-color ${eyeColor}"> ${eyeColor} </p>
     </div>
   </div>
 `;
@@ -19,9 +19,9 @@ const charactersComponent = (charactersData) => `
   <div class="characters">
     ${charactersData
     .map((characterData, index) => characterComponent(
-      characterData.name, 
-      characterData.height, 
-      characterData.mass, 
+      characterData.name,
+      characterData.height,
+      characterData.mass,
       index,
       characterData.hair_color,
       characterData.eye_color
@@ -44,7 +44,11 @@ const makeDomFromData = (data, rootElement) => {
 
   rootElement.insertAdjacentHTML("beforeend", charactersHtml);
   const moreButtonElements = document.querySelectorAll("button.more");
-  moreButtonElements.forEach(moreButtonElement => moreButtonElement.addEventListener("click", () => moreButtonElement.classList.toggle("clicked")));
+  moreButtonElements.forEach(moreButtonElement => moreButtonElement.addEventListener("click", () => {
+    moreButtonElement.classList.toggle("clicked");
+
+    moreButtonElement.innerText === "show more" ? moreButtonElement.innerText = "show less" : moreButtonElement.innerText = "show more";
+  }));
 
   if (data.next) {
     rootElement.insertAdjacentHTML("beforeend", buttonHtml);
